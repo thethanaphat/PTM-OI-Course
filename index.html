@@ -48,10 +48,13 @@
 
     a{color:inherit; text-decoration:none}
     .container{max-width:var(--max); margin:0 auto; padding:0 20px}
+
+    /* ── Nav ── */
     .nav{
       position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background: rgba(7,11,20,.65);
+      backdrop-filter: blur(14px) saturate(1.4);
+      -webkit-backdrop-filter: blur(14px) saturate(1.4);
+      background: rgba(7,11,20,.72);
       border-bottom: 1px solid var(--line);
     }
     .nav-inner{
@@ -78,64 +81,103 @@
       font-weight:700;
       font-size:14px;
     }
-    .nav-links a{opacity:.85}
-    .nav-links a:hover{opacity:1}
+    .nav-links a{
+      opacity:.85;
+      transition: opacity .2s, color .2s;
+      position: relative;
+    }
+    .nav-links a:hover{opacity:1; color: var(--accent)}
+    .nav-links a::after{
+      content:'';
+      position:absolute;
+      bottom:-4px; left:50%; 
+      width:0; height:2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius:2px;
+      transition: width .25s ease, left .25s ease;
+    }
+    .nav-links a:hover::after{width:100%; left:0}
+
     .cta{display:flex; gap:10px; align-items:center}
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 16px;
+      padding:12px 18px;
       border-radius: 14px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.03);
       color:var(--text);
       font-weight:800;
       cursor:pointer;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
       box-shadow: 0 10px 30px rgba(0,0,0,.18);
       user-select:none;
       white-space:nowrap;
+      font-size: 15px;
     }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(234,240,255,.22)}
+    .btn:hover{
+      transform: translateY(-2px); 
+      background: rgba(255,255,255,.06); 
+      border-color: rgba(234,240,255,.22);
+      box-shadow: 0 14px 40px rgba(0,0,0,.25);
+    }
     .btn.primary{
       border-color: rgba(125,211,252,.45);
       background: linear-gradient(135deg, rgba(125,211,252,.20), rgba(163,230,53,.14));
+    }
+    .btn.primary:hover{
+      border-color: rgba(125,211,252,.65);
+      background: linear-gradient(135deg, rgba(125,211,252,.30), rgba(163,230,53,.22));
+      box-shadow: 0 14px 40px rgba(125,211,252,.12);
     }
     .btn.warn{
       border-color: rgba(251,191,36,.55);
       background: linear-gradient(135deg, rgba(251,191,36,.20), rgba(125,211,252,.08));
     }
+    .btn.warn:hover{
+      border-color: rgba(251,191,36,.75);
+      background: linear-gradient(135deg, rgba(251,191,36,.30), rgba(125,211,252,.14));
+    }
 
-    .hero{padding: 42px 0 26px}
+    /* ── Hero ── */
+    .hero{padding: 56px 0 32px}
     .hero-content{
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
     .pill{
       display:inline-flex; gap:8px; align-items:center;
-      padding:8px 12px;
+      padding:8px 14px;
       border:1px solid var(--line);
       border-radius:999px;
-      background: rgba(255,255,255,.03);
+      background: rgba(255,255,255,.04);
       color: var(--muted);
       font-weight:800;
       font-size:14px;
       width: fit-content;
+      backdrop-filter: blur(6px);
     }
     .pill .dot{
       width:10px; height:10px; border-radius:99px;
       background: var(--accent2);
       box-shadow: 0 0 0 6px rgba(163,230,53,.12);
+      animation: pulse-dot 2s ease-in-out infinite;
     }
+    @keyframes pulse-dot{
+      0%,100%{box-shadow: 0 0 0 6px rgba(163,230,53,.12)}
+      50%{box-shadow: 0 0 0 10px rgba(163,230,53,.06)}
+    }
+
     h1{
-      margin:14px 0 10px;
+      margin:18px 0 14px;
       font-size: clamp(34px, 4.4vw, 56px);
-      line-height: 1.05;
+      line-height: 1.08;
       letter-spacing: .2px;
     }
     .sub{
       color: var(--muted);
       font-size: clamp(16px, 1.6vw, 20px);
-      margin: 0 0 18px;
+      margin: 0 0 20px;
       max-width: 58ch;
+      line-height: 1.7;
     }
     .highlight{
       background: linear-gradient(90deg, rgba(125,211,252,.95), rgba(163,230,53,.95));
@@ -144,13 +186,15 @@
       color: transparent;
       font-weight: 900;
     }
-    .hero-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px}
+    .hero-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top: 18px}
     .fine{
       color: rgba(234,240,255,.72);
       font-size: 14px;
-      margin-top: 10px;
+      margin-top: 14px;
+      line-height: 1.8;
     }
 
+    /* ── Cards & Tiles ── */
     .card{
       border: 1px solid var(--line);
       background: rgba(255,255,255,.03);
@@ -181,30 +225,95 @@
       max-width: 92%;
     }
 
-    section{padding: 26px 0}
-    .section-title{font-size: 30px; margin: 0 0 8px; letter-spacing:.2px}
-    .section-desc{margin:0 0 18px; color: var(--muted); font-size: 18px; max-width: 72ch}
+    /* ── Sections ── */
+    section{padding: 40px 0}
 
+    /* Section divider line */
+    .section-divider{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .section-divider-line{
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(125,211,252,.25) 20%, rgba(163,230,53,.2) 80%, transparent);
+    }
+
+    /* Section number badge */
+    .section-num{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .section-num::before{
+      content:'';
+      width: 24px; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+    }
+
+    .section-title{
+      font-size: clamp(26px, 3vw, 34px); 
+      margin: 0 0 10px; 
+      letter-spacing:.2px;
+      line-height: 1.2;
+    }
+    .section-desc{
+      margin:0 0 24px; 
+      color: var(--muted); 
+      font-size: 17px; 
+      max-width: 72ch;
+      line-height: 1.7;
+    }
+
+    /* ── Grids ── */
     .grid-3{display:grid; grid-template-columns: repeat(3, 1fr); gap:16px}
     .grid-2{display:grid; grid-template-columns: repeat(2, 1fr); gap:16px}
+
+    /* ── Tiles ── */
     .tile{
-      padding: 18px;
+      padding: 22px;
       border-radius: var(--radius);
       border: 1px solid var(--line);
       background: rgba(255,255,255,.03);
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
     }
-    .tile h3{margin:0 0 6px; font-size: 20px}
-    .tile p{margin:0; color: var(--muted); font-size: 16px}
+    .tile:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.3);
+    }
+    .tile h3{margin:0 0 8px; font-size: 20px}
+    .tile p{margin:0; color: var(--muted); font-size: 16px; line-height: 1.65}
 
-    ul.clean{margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 16px}
-    ul.clean li{margin: 6px 0}
+    .tile.tint-blue{background: linear-gradient(180deg, rgba(125,211,252,.10), rgba(255,255,255,.02)); border-color: rgba(125,211,252,.20)}
+    .tile.tint-blue:hover{border-color: rgba(125,211,252,.40)}
+    .tile.tint-green{background: linear-gradient(180deg, rgba(163,230,53,.08), rgba(255,255,255,.02)); border-color: rgba(163,230,53,.20)}
+    .tile.tint-green:hover{border-color: rgba(163,230,53,.40)}
+    .tile.tint-purple{background: linear-gradient(180deg, rgba(216,180,254,.10), rgba(255,255,255,.02)); border-color: rgba(216,180,254,.20)}
+    .tile.tint-purple:hover{border-color: rgba(216,180,254,.40)}
+    .tile.tint-warn{background: linear-gradient(180deg, rgba(251,191,36,.08), rgba(255,255,255,.02)); border-color: rgba(251,191,36,.20)}
+    .tile.tint-warn:hover{border-color: rgba(251,191,36,.40)}
+    .tile.tint-rose{background: linear-gradient(180deg, rgba(251,113,133,.08), rgba(255,255,255,.02)); border-color: rgba(251,113,133,.20)}
+    .tile.tint-rose:hover{border-color: rgba(251,113,133,.40)}
+    .tile.tint-cyan{background: linear-gradient(180deg, rgba(34,211,238,.08), rgba(255,255,255,.02)); border-color: rgba(34,211,238,.20)}
+    .tile.tint-cyan:hover{border-color: rgba(34,211,238,.40)}
+
+    ul.clean{margin: 10px 0 0; padding-left: 20px; color: var(--muted); font-size: 16px; line-height: 1.7}
+    ul.clean li{margin: 8px 0}
+    ul.clean li::marker{color: rgba(125,211,252,.5)}
 
     .badge{
       display:inline-flex; align-items:center; gap:8px;
-      padding: 8px 10px;
+      padding: 8px 12px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
+      background: rgba(255,255,255,.04);
       font-weight: 900;
       font-size: 13px;
       color: rgba(234,240,255,.88);
@@ -216,18 +325,34 @@
       box-shadow: 0 0 0 6px rgba(125,211,252,.10);
     }
 
+    /* ── Pricing ── */
     .offer{display:grid; grid-template-columns: 1.1fr .9fr; gap:16px; align-items:stretch}
     .offer .box{padding: 18px}
-    .price{font-size: 40px; font-weight: 950; letter-spacing: .2px; margin: 6px 0 8px}
-    .price small{font-size: 18px; color: var(--muted); font-weight: 800}
+    .price{
+      font-size: 42px; 
+      font-weight: 950; 
+      letter-spacing: .2px; 
+      margin: 8px 0 10px;
+      background: linear-gradient(135deg, var(--text), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .price small{
+      font-size: 17px; 
+      color: var(--muted); 
+      font-weight: 800;
+      -webkit-text-fill-color: var(--muted);
+    }
     .callout{
-      padding: 14px 14px;
+      padding: 16px;
       border-radius: 16px;
-      border: 1px dashed rgba(251,191,36,.55);
-      background: rgba(251,191,36,.10);
+      border: 1px dashed rgba(251,191,36,.45);
+      background: rgba(251,191,36,.06);
       color: rgba(234,240,255,.92);
       font-weight: 800;
       font-size: 15px;
+      line-height: 1.7;
     }
 
     .placeholder{
@@ -241,13 +366,18 @@
     }
     .placeholder code{color: rgba(234,240,255,.90)}
     
-    /* Image wrapper for full-width images */
+    /* ── Image wrappers ── */
     .img-wrap{
       border-radius: var(--radius);
       overflow:hidden;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.03);
       box-shadow: var(--shadow);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .img-wrap:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.4);
     }
     .img-wrap img{
       width:100%; 
@@ -256,14 +386,14 @@
       object-fit: cover;
     }
 
-    /* Hero image - full width within container */
+    /* Hero image */
     .hero-image-wrapper {
       border-radius: var(--radius);
       overflow: hidden;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.03);
-      box-shadow: var(--shadow);
-      margin-top: 24px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.4);
+      margin-top: 28px;
     }
     .hero-image-wrapper img {
       width: 100%;
@@ -272,46 +402,154 @@
       object-fit: cover;
     }
 
+    /* ── FAQ ── */
     .faq{display:grid; grid-template-columns: 1fr; gap:10px}
     details{
       border:1px solid var(--line);
       background: rgba(255,255,255,.03);
       border-radius: 16px;
-      padding: 14px 16px;
+      padding: 16px 20px;
+      transition: border-color .2s ease, background .2s ease;
     }
-    summary{cursor:pointer; font-weight: 900; font-size: 16px; color: rgba(234,240,255,.92)}
-    details p{margin: 10px 0 0; color: var(--muted); font-size: 16px}
+    details:hover{
+      border-color: rgba(125,211,252,.25);
+      background: rgba(255,255,255,.04);
+    }
+    details[open]{
+      border-color: rgba(125,211,252,.3);
+      background: rgba(125,211,252,.04);
+    }
+    summary{
+      cursor:pointer; 
+      font-weight: 900; 
+      font-size: 16px; 
+      color: rgba(234,240,255,.92);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    summary::-webkit-details-marker{display:none}
+    summary::after{
+      content: '+';
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--accent);
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid rgba(125,211,252,.2);
+      background: rgba(125,211,252,.06);
+      transition: transform .25s ease, background .25s ease;
+    }
+    details[open] summary::after{
+      content: '−';
+      transform: rotate(180deg);
+      background: rgba(125,211,252,.12);
+    }
+    details p{margin: 12px 0 0; color: var(--muted); font-size: 16px; line-height: 1.7}
 
+    /* ── About ── */
+    .about-head{display:flex; gap:16px; align-items:flex-start}
+    .avatar{
+      width:72px; height:72px; border-radius:16px;
+      border:2px solid rgba(125,211,252,.25);
+      overflow:hidden;
+      flex:0 0 auto;
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 12px 30px rgba(0,0,0,.3);
+    }
+    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
+    .about-name{font-size:22px; font-weight:950; margin:0}
+    .about-sub{margin:4px 0 0; color:var(--muted); font-size:15px; font-weight:700}
+    .btn-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+
+    /* ── Contact CTA section ── */
+    #contact{
+      text-align: center;
+      padding: 48px 0 56px;
+    }
+    #contact .section-title{
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #contact .section-desc{
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #contact .section-num{
+      justify-content: center;
+    }
+    #contact .btn.primary{
+      padding: 16px 28px;
+      font-size: 17px;
+      border-radius: 16px;
+    }
+
+    /* ── Footer ── */
     footer{
-      padding: 26px 0 40px;
+      padding: 30px 0 44px;
       border-top: 1px solid var(--line);
-      margin-top: 18px;
-      color: rgba(234,240,255,.70);
+      margin-top: 20px;
+      color: rgba(234,240,255,.60);
+      font-size: 14px;
+    }
+    .footer-inner{
+      display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+    }
+    .footer-disclaimer{
+      font-size:13px; opacity:.75; margin-top:6px; line-height: 1.6;
+    }
+    .footer-link{
+      text-decoration:underline; 
+      text-underline-offset:3px;
+      transition: color .2s;
+    }
+    .footer-link:hover{color: var(--accent)}
+
+    /* ── Pricing card featured ── */
+    .tile.pricing-featured{
+      border-color: rgba(125,211,252,.3);
+      background: linear-gradient(180deg, rgba(125,211,252,.06), rgba(255,255,255,.02));
+      position: relative;
+      overflow: hidden;
+    }
+    .tile.pricing-featured::before{
+      content:'';
+      position: absolute;
+      top:0; left:0; right:0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
     }
 
+    /* ── Scroll fade-in animation ── */
+    .fade-up{
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .fade-up.visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Grid gap helpers ── */
+    .gap-row{height: 16px}
+
+    /* ── Responsive ── */
     @media (max-width: 980px){
       .grid-3{grid-template-columns: 1fr}
       .grid-2{grid-template-columns: 1fr}
       .offer{grid-template-columns: 1fr}
       .media{min-height: 260px}
       .nav-links{display:none}
+      .hero{padding: 36px 0 24px}
+      section{padding: 32px 0}
     }
-
-  
-    /* About (Instructor) */
-    .about-head{display:flex; gap:14px; align-items:flex-start}
-    .avatar{
-      width:64px; height:64px; border-radius:16px;
-      border:1px solid var(--line);
-      overflow:hidden;
-      flex:0 0 auto;
-      background: rgba(255,255,255,.04);
-      box-shadow: var(--shadow);
-    }
-    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
-    .about-name{font-size:20px; font-weight:950; margin:0}
-    .about-sub{margin:4px 0 0; color:var(--muted); font-size:15px; font-weight:700}
-    .btn-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
 
   </style>
 </head>
@@ -330,6 +568,7 @@
 
         <div class="nav-links">
           <a href="#why">ทำไมต้อง PTM+OI</a>
+          <a href="#ultimate">PTM Ultimate</a>
           <a href="#learn">เรียนอะไร</a>
           <a href="#get">ได้อะไร</a>
           <a href="#reviews">รีวิว</a>
@@ -356,7 +595,7 @@
         </h1>
 
         <p class="sub">
-          • หน้าเทรดมาตรฐานสำหรับสายเทรดสั้น–กลาง ที่อยาก “เข้า–ออกเป็นระบบ”<br/>
+          • หน้าเทรดมาตรฐานสำหรับสายเทรดสั้น–กลาง ที่อยาก "เข้า–ออกเป็นระบบ"<br/>
           • PTM ช่วยให้เห็นจังหวะ <b>Pullback</b> ชัดขึ้น<br/> 
           • OI ช่วยดู <b> แนวรับ–แนวต้านสำคัญ </b> เพื่อวาง TP/SL แบบมีเหตุผล<br/>
           • เหมาะมากกับ <b>XAUUSD</b> และ <b>US Indices</b>
@@ -370,7 +609,7 @@
 
         <div class="fine">
           ✅ เรียนรู้แนวคิด + วิธีใช้ indicator แบบ step-by-step<br/>
-          ✅ ได้ “กรอบตัดสินใจ” ที่ช่วยเพิ่มวินัยและความสม่ำเสมอในการเทรด
+          ✅ ได้ "กรอบตัดสินใจ" ที่ช่วยเพิ่มวินัยและความสม่ำเสมอในการเทรด
         </div>
       </div>
 
@@ -380,47 +619,112 @@
     </div>
   </header>
 
-  
+
+  <!-- ═══ Section: PTM Ultimate ═══ -->
+  <div class="section-divider"><div class="section-divider-line"></div></div>
+
+  <section id="ultimate">
+    <div class="container">
+      <div class="fade-up">
+        <div class="section-num">01 — PTM Ultimate</div>
+        <h2 class="section-title">PTM Ultimate — Major Upgrade ของ PTM System</h2>
+        <p class="section-desc">
+          เวอร์ชันใหม่นี้ไม่ได้เป็นแค่การอัปเดต indicator แบบย่อย แต่เป็นการยกระดับแกนหลักของระบบ PTM ให้ช่วยอ่านตลาดได้ลึกขึ้น คัดคุณภาพของ setup ได้ดีขึ้น และตัดสินใจได้ง่ายขึ้นในหน้าจอเดียว
+        </p>
+      </div>
+
+      <div class="fade-up img-wrap">
+        <img src="assets/ultimate.png" alt="PTM Ultimate - The Real Deal">
+      </div>
+
+      <div class="gap-row"></div>
+
+      <div class="grid-2">
+        <div class="fade-up tile tint-blue">
+          <h3>สัญญาณ 3 แบบ อ่านบริบทตลาดได้ชัดขึ้น</h3>
+          <p>แยกสัญญาณเป็น <b>TR / SW / CT</b> หรือ <b>Trend / Sideway / Counter Trend</b> ทำให้รู้ทันทีว่า setup ที่เห็นเป็นเกมแบบไหน ควรตาม รอ หรือสวนอย่างระวัง</p>
+        </div>
+        <div class="fade-up tile tint-purple">
+          <h3>Dashboard รวม 3 TF ในตารางเดียว</h3>
+          <p>เห็นภาพรวม <b>Trend / Momentum</b> ของหลาย timeframe ได้เร็วขึ้น ลดการสลับหน้าจอและช่วยให้ตัดสินใจในจังหวะสำคัญได้ง่ายกว่าเดิม</p>
+        </div>
+      </div>
+
+      <div class="gap-row"></div>
+
+      <div class="grid-2">
+        <div class="fade-up tile tint-green">
+          <h3>Confirm Trend & Momentum พร้อมกันหลาย TF</h3>
+          <p>สัญลักษณ์แบบ <b>Multi-TF confirmation</b> ช่วยคัดว่า setup ไหนมีน้ำหนักจริง และ setup ไหนยังไม่แข็งแรงพอ จึงเพิ่มคุณภาพของจุดเข้าได้มากขึ้น</p>
+        </div>
+        <div class="fade-up tile tint-warn">
+          <h3>Market State ย้อนหลัง ดูสภาพตลาดได้ในภาพเดียว</h3>
+          <p>ลูกกลม 5 สีช่วยสรุปสภาวะตลาดย้อนหลัง ตั้งแต่ <b>Strong Bullish</b> ไปจนถึง <b>Strong Bearish</b> จึงใช้ได้ทั้งตอนเทรดสดและตอนย้อนดูกราฟเพื่อฝึกอ่านเกม</p>
+        </div>
+      </div>
+
+      <div class="gap-row"></div>
+
+      <div class="grid-2">
+        <div class="fade-up tile tint-cyan">
+          <h3>ใช้งานร่วมกับ PTM Momentum ได้แม่นขึ้น</h3>
+          <p><b>PTM Ultimate</b> ช่วยคัด setup และ <b>PTM Momentum</b> ช่วย confirm แรงส่งของเทรนด์ เมื่อนำมาใช้ร่วมกันจึงช่วยลดการเข้าเพราะเห็นแค่ราคาแต่ไม่ดู momentum</p>
+        </div>
+        <div class="fade-up tile tint-rose">
+          <h3>เชื่อมกับ PTM Grid OI เพื่อวางเป้าหมายได้เป็นระบบ</h3>
+          <p>เมื่อ combine กับ <b>PTM Grid OI</b> จะช่วยให้การอ่านจังหวะเข้าและการวาง TP/SL มีเหตุผลมากขึ้น เพราะรู้ทั้งคุณภาพ setup และสนามของราคาในเวลาเดียวกัน</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ Section: Why PTM+OI ═══ -->
+  <div class="section-divider"><div class="section-divider-line"></div></div>
+
   <section id="why">
     <div class="container">
-      <h2 class="section-title">ทำไมต้อง PTM + OI</h2>
-      <p class="section-desc">
-        หลายคนเรียนมาเยอะ แต่พอร์ตไม่โตและแตกซ้ำซาก เพราะเข้าเทรดแต่ละครั้งไม่เหมือนกัน<br/>
-        ดังนั้นสิ่งที่คุณต้องการ คือ ระบบที่ทำให้ตัดสินใจเหมือนเดิมได้ทุกวัน<br/>
-        เพราะกำไรไม่ได้มาจาก “ทายถูกครั้งเดียว” แต่มาจาก “ทำสิ่งที่ถูกซ้ำ ๆ”<br/>
-        PTM + OI คือกรอบคิดและเครื่องมือที่ทำให้คุณเลือกจังหวะเข้าเทรด วางเป้าหมาย และคุมความเสี่ยงแบบเป็นระบบมากขึ้น
-      </p>
+      <div class="fade-up">
+        <div class="section-num">02 — ทำไมต้อง PTM+OI</div>
+        <h2 class="section-title">ทำไมต้อง PTM + OI</h2>
+        <p class="section-desc">
+          หลายคนเรียนมาเยอะ แต่พอร์ตไม่โตและแตกซ้ำซาก เพราะเข้าเทรดแต่ละครั้งไม่เหมือนกัน<br/>
+          ดังนั้นสิ่งที่คุณต้องการ คือ ระบบที่ทำให้ตัดสินใจเหมือนเดิมได้ทุกวัน<br/>
+          เพราะกำไรไม่ได้มาจาก "ทายถูกครั้งเดียว" แต่มาจาก "ทำสิ่งที่ถูกซ้ำ ๆ"<br/>
+          PTM + OI คือกรอบคิดและเครื่องมือที่ทำให้คุณเลือกจังหวะเข้าเทรด วางเป้าหมาย และคุมความเสี่ยงแบบเป็นระบบมากขึ้น
+        </p>
+      </div>
 
-      <div class="tile">
-        <h3 style="margin:0 0 8px">ปรัชญาของ PTM + OI</h3>
-        <p style="margin:0;color:var(--muted);font-size:16px">
-          แนวคิดหลักคือ “อ่านเกมให้ชัด แล้วค่อยลงมือ” — ไม่ใช่หาอินดี้เพิ่ม แต่ทำให้การตัดสินใจมีขั้นตอนเดียวกันทุกครั้ง
+      <div class="fade-up tile tint-blue">
+        <h3 style="margin:0 0 10px">ปรัชญาของ PTM + OI</h3>
+        <p style="margin:0;color:var(--muted);font-size:16px;line-height:1.7">
+          แนวคิดหลักคือ "อ่านเกมให้ชัด แล้วค่อยลงมือ" — ไม่ใช่หาอินดี้เพิ่ม แต่ทำให้การตัดสินใจมีขั้นตอนเดียวกันทุกครั้ง
         </p>
 
         <ul class="clean">
-          <li><b>PTM</b> มาจาก <b>Price • Trend • Momentum</b> — 3 องค์ประกอบที่ต้อง “ไปทางเดียวกัน” เพื่อเพิ่มคุณภาพสัญญาณ</li>
-          <li><b>PTM System</b> พัฒนาจากแนวทาง <b>Trend Following สไตล์ Pullback</b> ให้กลายเป็น indicator ที่ “ชัดเจน • เรียนรู้ง่าย • ใช้งานจริงได้”</li>
-          <li>ช่วยลดปัญหา “คนเรียนเหมือนกันแต่เข้าเทรดไม่ใช่จุดเดียวกัน” เพราะมีเกณฑ์การเข้า–ออกที่ชัดเจนมากขึ้น</li>
+          <li><b>PTM</b> มาจาก <b>Price • Trend • Momentum</b> — 3 องค์ประกอบที่ต้อง "ไปทางเดียวกัน" เพื่อเพิ่มคุณภาพสัญญาณ</li>
+          <li><b>PTM System</b> พัฒนาจากแนวทาง <b>Trend Following สไตล์ Pullback</b> ให้กลายเป็น indicator ที่ "ชัดเจน • เรียนรู้ง่าย • ใช้งานจริงได้"</li>
+          <li>ช่วยลดปัญหา "คนเรียนเหมือนกันแต่เข้าเทรดไม่ใช่จุดเดียวกัน" เพราะมีเกณฑ์การเข้า–ออกที่ชัดเจนมากขึ้น</li>
           <li><b>OI (Option Open Interest)</b> คือข้อมูลตำแหน่งคงค้างของออปชันในแต่ละระดับราคา เมื่อนำมาทำเป็นแผนที่จะช่วยมองโซนแนวรับ–แนวต้านที่มีนัยสำคัญ</li>
-          <li><b>PTM + OI</b> = PTM ช่วย “หาจังหวะ” ส่วน OI ช่วย “กำหนดสนาม/เป้าหมาย” ทำให้วาง TP/SL แบบมีเหตุผล เพิ่มโอกาสชนะ และเทรดได้เป็นระบบมากขึ้น</li>
+          <li><b>PTM + OI</b> = PTM ช่วย "หาจังหวะ" ส่วน OI ช่วย "กำหนดสนาม/เป้าหมาย" ทำให้วาง TP/SL แบบมีเหตุผล เพิ่มโอกาสชนะ และเทรดได้เป็นระบบมากขึ้น</li>
         </ul>
       </div>
 
-      <div style="height:14px"></div>
+      <div class="gap-row"></div>
 
       <div class="grid-2">
-        <div class="tile">
+        <div class="fade-up tile tint-green">
           <h3>เหมาะกับใคร</h3>
           <ul class="clean">
-            <li>มือใหม่–ระดับกลางที่อยากมี “ระบบ” และหน้าเทรดมาตรฐาน</li>
+            <li>มือใหม่–ระดับกลางที่อยากมี "ระบบ" และหน้าเทรดมาตรฐาน</li>
             <li>สายเทรดสั้น M1–M5 ที่อยากเพิ่มความแม่นยำและวินัย</li>
             <li>คนที่ตั้งใจสอบ prop firm และต้องการกระบวนการเข้า–ออกที่ชัดเจน</li>
           </ul>
         </div>
-        <div class="tile">
+        <div class="fade-up tile tint-rose">
           <h3>ไม่เหมาะกับใคร</h3>
           <ul class="clean">
-            <li>คนที่หวัง “สัญญาณรวยเร็ว” แบบไม่ต้องฝึก</li>
+            <li>คนที่หวัง "สัญญาณรวยเร็ว" แบบไม่ต้องฝึก</li>
             <li>คนที่ไม่อยากเรียนรู้การอ่านบริบทตลาดและวางแผนเข้าออก</li>
           </ul>
         </div>
@@ -429,16 +733,21 @@
   </section>
 
 
-  
+  <!-- ═══ Section: Curriculum ═══ -->
+  <div class="section-divider"><div class="section-divider-line"></div></div>
+
   <section id="learn">
     <div class="container">
-      <h2 class="section-title">เรียนอะไรบ้าง</h2>
-      <p class="section-desc">
-        คอร์สจัดลำดับให้เรียนรู้แบบเป็นระบบ: แนวคิด → วิธีใช้จริง → เครื่องมือเสริม → แล้วจบด้วยเคสตัวอย่าง
-      </p>
+      <div class="fade-up">
+        <div class="section-num">03 — สารบัญคอร์ส</div>
+        <h2 class="section-title">เรียนอะไรบ้าง</h2>
+        <p class="section-desc">
+          คอร์สจัดลำดับให้เรียนรู้แบบเป็นระบบ: แนวคิด → วิธีใช้จริง → เครื่องมือเสริม → แล้วจบด้วยเคสตัวอย่าง
+        </p>
+      </div>
 
       <div class="grid-2">
-        <div class="tile">
+        <div class="fade-up tile tint-purple">
           <h3>สารบัญคอร์ส (สรุป)</h3>
           <ul class="clean">
             <li>แนวคิดหลักของ <b>PTM System</b></li>
@@ -450,7 +759,7 @@
           </ul>
         </div>
 
-        <div class="img-wrap">
+        <div class="fade-up img-wrap">
           <img src="assets/curriculum.png" alt="Curriculum">
         </div>
       </div>
@@ -458,74 +767,83 @@
   </section>
 
 
-  
-  
+  <!-- ═══ Section: What you get ═══ -->
+  <div class="section-divider"><div class="section-divider-line"></div></div>
+
   <section id="get">
     <div class="container">
-      <h2 class="section-title">ได้อะไรจากคอร์สนี้</h2>
-      <p class="section-desc">
-        ✅ เนื้อหาคอร์สพร้อมเรียนในกลุ่มปิด Facebook — <b>ดูได้ตลอด</b> (เนื้อหาไม่หมดอายุ)<br/>
-        ✅ ใช้งาน Indicator <b>PTM Family</b> ได้ฟรี <b>90 วัน</b> (สามารถต่ออายุได้ตาม package ที่เลือก)
-      </p>
+      <div class="fade-up">
+        <div class="section-num">04 — ได้อะไร</div>
+        <h2 class="section-title">ได้อะไรจากคอร์สนี้</h2>
+        <p class="section-desc">
+          ✅ เนื้อหาคอร์สพร้อมเรียนในกลุ่มปิด Facebook — <b>ดูได้ตลอด</b> (เนื้อหาไม่หมดอายุ)<br/>
+          ✅ ใช้งาน Indicator <b>PTM Family</b> ได้ฟรี <b>90 วัน</b> (สามารถต่ออายุได้ตาม package ที่เลือก)<br/>
+          ✅ ชุดใหม่ถูกปรับให้เล่าเรื่องง่ายขึ้น โดยมี <b>PTM Ultimate</b> เป็นแกนหลักของระบบ
+        </p>
+      </div>
 
       <div class="grid-2">
-        <div class="tile">
-          <h3>PTM System</h3>
-          <p>อ่าน <b>Price Action + Trend</b> ให้ชัดขึ้น ช่วยหาจังหวะ “เข้าแบบ pullback” เป็นระบบ</p>
+        <div class="fade-up tile tint-blue">
+          <h3>PTM Ultimate (Major Upgrade)</h3>
+          <p>ตัวหลักของระบบรุ่นใหม่ ช่วยอ่าน <b>Price + Trend + Multi-TF Context</b> ได้ดีขึ้น พร้อมแยกสัญญาณเป็น <b>Trend / Sideway / Counter Trend</b></p>
         </div>
-        <div class="tile">
+        <div class="fade-up tile tint-green">
           <h3>PTM Momentum</h3>
-          <p>ช่วย <b>confirm แรงส่ง</b> ลดการหลงจังหวะช่วง sideway และลดสัญญาณหลอก</p>
+          <p>ช่วย <b>confirm แรงส่ง</b> ของเทรนด์และเพิ่มความแม่นยำเมื่อนำมาใช้ร่วมกับ PTM Ultimate</p>
         </div>
       </div>
 
-      <div style="height:14px"></div>
+      <div class="gap-row"></div>
 
       <div class="grid-2">
-        <div class="tile">
-          <h3>PTM Dashboard</h3>
-          <p>เห็นภาพรวมหลาย TF ในมุมเดียว ลดการ “หลงทิศ” และช่วยตัดสินใจเร็วขึ้น</p>
+        <div class="fade-up tile tint-warn">
+          <h3>PTM Grid OI</h3>
+          <p>ช่วย map แนวรับ–แนวต้านตามระดับ OI ได้ชัดขึ้น เพื่อวาง TP/SL แบบมีเหตุผลมากขึ้น</p>
         </div>
-        <div class="tile">
-          <h3>PTM Grid OI (New)</h3>
-          <p>map แนวรับ–แนวต้านจาก OI เพื่อวาง TP/SL แบบมีเหตุผลมากขึ้น</p>
+        <div class="fade-up tile tint-cyan">
+          <h3>PTM Family ทำงานร่วมกันอย่างไร</h3>
+          <p><b>PTM Ultimate</b> ช่วยคัด setup, <b>PTM Momentum</b> ช่วย confirm แรงส่ง, และ <b>PTM Grid OI</b> ช่วยกำหนดสนามและเป้าหมายของราคา</p>
         </div>
       </div>
 
-      <div style="height:14px"></div>
+      <div class="gap-row"></div>
 
-      <div class="img-wrap">
+      <div class="fade-up img-wrap">
         <img src="assets/indicator-family.jpg" alt="Indicator PTM Family Overview">
       </div>
     </div>
   </section>
 
 
+  <!-- ═══ Section: Case Study ═══ -->
+  <div class="section-divider"><div class="section-divider-line"></div></div>
 
-  
   <section id="case">
     <div class="container">
-      <h2 class="section-title">Case Study</h2>
-      <p class="section-desc">
-        ตัวอย่างการประยุกต์ใช้หลักการ PTM + OI ในสถานการณ์จริง
-        เพื่อให้เห็นว่า “จังหวะเข้าแบบ pullback + การ confirm momentum + การวางเป้าหมายด้วย OI” ทำงานร่วมกันอย่างไร
-      </p>
+      <div class="fade-up">
+        <div class="section-num">05 — Case Study</div>
+        <h2 class="section-title">Case Study</h2>
+        <p class="section-desc">
+          ตัวอย่างการประยุกต์ใช้หลักการ PTM + OI ในสถานการณ์จริง
+          เพื่อให้เห็นว่า "จังหวะเข้าแบบ pullback + การ confirm momentum + การวางเป้าหมายด้วย OI" ทำงานร่วมกันอย่างไร
+        </p>
+      </div>
 
-      <div class="grid-2">
+      <div class="grid-2 fade-up">
         <div class="img-wrap"><img src="assets/case-1.jpg" alt="Case Study 1"></div>
         <div class="img-wrap"><img src="assets/case-2.jpg" alt="Case Study 2"></div>
       </div>
 
-      <div style="height:14px"></div>
+      <div class="gap-row"></div>
 
-      <div class="grid-2">
+      <div class="grid-2 fade-up">
         <div class="img-wrap"><img src="assets/case-3.jpg" alt="Case Study 3"></div>
         <div class="img-wrap"><img src="assets/case-4.jpg" alt="Case Study 4"></div>
       </div>
 
-      <div style="height:14px"></div>
+      <div class="gap-row"></div>
 
-      <div class="grid-2">
+      <div class="grid-2 fade-up">
         <div class="img-wrap"><img src="assets/case-5.jpg" alt="Case Study 5"></div>
         <div class="img-wrap"><img src="assets/case-6.jpg" alt="Case Study 6"></div>
       </div>
@@ -533,19 +851,25 @@
   </section>
 
 
+  <!-- ═══ Section: Reviews ═══ -->
+  <div class="section-divider"><div class="section-divider-line"></div></div>
+
   <section id="reviews">
     <div class="container">
-      <h2 class="section-title">รีวิวจากผู้เรียน</h2>
-      <p class="section-desc">รีวิวบางส่วนจากผู้เรียนคอร์ส PTM System</p>
+      <div class="fade-up">
+        <div class="section-num">06 — รีวิว</div>
+        <h2 class="section-title">รีวิวจากผู้เรียน</h2>
+        <p class="section-desc">รีวิวบางส่วนจากผู้เรียนคอร์ส PTM System</p>
+      </div>
 
-      <div class="grid-2">
+      <div class="grid-2 fade-up">
         <div class="img-wrap"><img src="assets/review-1.jpg" alt="Review 1"></div>
         <div class="img-wrap"><img src="assets/review-2.jpg" alt="Review 2"></div>
       </div>
 
-      <div style="height:14px"></div>
+      <div class="gap-row"></div>
 
-      <div class="grid-2">
+      <div class="grid-2 fade-up">
         <div class="img-wrap"><img src="assets/review-3.jpg" alt="Review 3"></div>
         <div class="img-wrap"><img src="assets/review-4.jpg" alt="Review 4"></div>
       </div>
@@ -553,13 +877,19 @@
   </section>
 
 
+  <!-- ═══ Section: About ═══ -->
+  <div class="section-divider"><div class="section-divider-line"></div></div>
+
   <section id="about">
     <div class="container">
-      <h2 class="section-title">เกี่ยวกับ อ.ใหม่</h2>
-      <p class="section-desc">เบื้องหลังแนวคิด PTM System และการต่อยอดด้วย Option OI</p>
+      <div class="fade-up">
+        <div class="section-num">07 — ผู้สอน</div>
+        <h2 class="section-title">เกี่ยวกับ อ.ใหม่</h2>
+        <p class="section-desc">เบื้องหลังแนวคิด PTM System และการต่อยอดด้วย Option OI</p>
+      </div>
 
       
-      <div class="tile">
+      <div class="fade-up tile">
           <div class="about-head">
             <div class="avatar">
               <img src="assets/aj-mai.jpg" alt="Aj.Mai">
@@ -570,16 +900,16 @@
             </div>
           </div>
 
-          <div style="height:10px"></div>
+          <div style="height:14px"></div>
 
           <ul class="clean">
             <li>วิทยากรและผู้สอนด้านการเงิน/การลงทุนมายาวนาน ทั้งหลักสูตรนักการเงินมืออาชีพ (IC, CFP, Refresh) และหลักสูตรการลงทุน (Stock & Option, Forex)</li>
-            <li><b>ผู้พัฒนา PTM System</b> ที่แปลงแนวทาง <b>Trend Follower สไตล์ Pullback</b> ให้กลายเป็น indicator ที่ “ชัดเจน • เรียนรู้ง่าย • ใช้งานจริงได้”</li>
+            <li><b>ผู้พัฒนา PTM System</b> ที่แปลงแนวทาง <b>Trend Follower สไตล์ Pullback</b> ให้กลายเป็น indicator ที่ "ชัดเจน • เรียนรู้ง่าย • ใช้งานจริงได้"</li>
             <li>ปัจจุบันต่อยอดด้วย <b>Option OI</b> เพื่อช่วยดูแนวรับ–แนวต้านสำคัญ และวาง TP/SL แบบมีเหตุผล เพิ่มประสิทธิภาพของระบบขึ้นไปอีกระดับ</li>
             <li>มีผู้ติดตามเพจด้านการลงทุนมากกว่า 10,000 คน และช่วยให้ผู้เรียนพัฒนาทักษะการเทรดอย่างเป็นระบบ</li>
           </ul>
 
-          <div style="height:14px"></div>
+          <div style="height:18px"></div>
           <div class="img-wrap">
             <img src="assets/topstep-cert.jpg" alt="Topstep Certificate">
           </div>
@@ -596,42 +926,45 @@
   </section>
 
 
+  <!-- ═══ Section: Pricing ═══ -->
+  <div class="section-divider"><div class="section-divider-line"></div></div>
 
-  
-  
   <section id="price">
     <div class="container">
-      <h2 class="section-title">คอร์สที่สอน</h2>
-      <p class="section-desc">
-        เลือกแพ็กที่เหมาะกับสไตล์คุณ — ถ้าอ่านแล้วสนใจ ทักแชทเพื่อเช็คสิทธิ/รายละเอียดได้ทันที
-      </p>
+      <div class="fade-up">
+        <div class="section-num">08 — แพ็กเกจ</div>
+        <h2 class="section-title">คอร์สที่สอน</h2>
+        <p class="section-desc">
+          เลือกแพ็กที่เหมาะกับสไตล์คุณ — ถ้าอ่านแล้วสนใจ ทักแชทเพื่อเช็คสิทธิ/รายละเอียดได้ทันที
+        </p>
+      </div>
 
       <div class="grid-2">
-        <div class="tile">
+        <div class="fade-up tile pricing-featured">
           <div class="badge"><span class="b"></span> PTM + OI</div>
           <div class="price">฿6,900 <small>(ราคาเต็ม)</small></div>
           <div class="callout">
             ✅ ราคาเปิดตัว <b>฿4,900</b><br/>
-            ✅ 10 คนแรกที่ “โอนก่อน” เหลือ <b>฿3,900</b> + เพิ่มสิทธิใช้งาน indicator รวมเป็น <b>180 วัน</b>
+            ✅ 10 คนแรกที่ "โอนก่อน" รับสิทธิใช้งาน indicator รวมเป็น <b>180 วัน</b>
           </div>
           <ul class="clean">
-            <li>ได้ใช้ indicator ครบ 4 ตัว (System / Momentum / Dashboard / Grid OI)</li>
+            <li>ได้ใช้ indicator ชุดใหม่ 3 ตัว (PTM Ultimate / PTM Momentum / PTM Grid OI)</li>
             <li>เนื้อหาเรียนในกลุ่มปิด Facebook — <b>ดูได้ตลอด</b></li>
             <li>ใช้งาน indicator ฟรี 90 วัน (ต่ออายุได้ตาม package ที่เลือก)</li>
           </ul>
-          <div style="height:12px"></div>
+          <div style="height:14px"></div>
           <a class="btn primary" href="https://m.me/thethanaphat" target="_blank" rel="noopener">ทักแชทเพื่อสมัคร / เช็คสิทธิ 10 คนแรก</a>
         </div>
 
-        <div class="tile">
+        <div class="fade-up tile">
           <div class="badge"><span class="b" style="background:var(--warn)"></span> PTM Premium (เดิม Active)</div>
           <div class="price">฿12,900 <small>(รับจำนวนจำกัด)</small></div>
           <ul class="clean">
-            <li>ได้เนื้อหาและ indicator เหมือน PTM + OI</li>
+            <li>ได้เนื้อหาและ indicator ชุดเดียวกับ PTM + OI</li>
             <li>Indicator ใช้งานได้ <b>1 ปี</b> (ต่ออายุรายปี <b>฿2,990</b>)</li>
           </ul>
 
-          <div style="height:10px"></div>
+          <div style="height:12px"></div>
           <div class="callout">
             <b>Premium Add-on</b><br/>
             ⭐ Unlock เนื้อหา premium เพิ่มเติม<br/>
@@ -640,14 +973,14 @@
             📝 Coaching & Development: ตรวจการบ้าน/ปรึกษาการเทรด/คำแนะนำโดย อ.ใหม่
           </div>
 
-          <div style="height:12px"></div>
+          <div style="height:14px"></div>
           <a class="btn primary" href="https://m.me/thethanaphat" target="_blank" rel="noopener">ทักแชทสอบถาม PTM Premium</a>
         </div>
       </div>
 
-      <div style="height:16px"></div>
+      <div class="gap-row"></div>
 
-      <div class="tile">
+      <div class="fade-up tile">
         <div class="badge"><span class="b" style="background:var(--accent2)"></span> เปรียบเทียบแพ็ก</div>
         <p style="margin:6px 0 12px; color:var(--muted); font-size:16px">ดูความต่างแบบสรุปในภาพเดียว</p>
         <div class="img-wrap">
@@ -658,13 +991,18 @@
   </section>
 
 
+  <!-- ═══ Section: FAQ ═══ -->
+  <div class="section-divider"><div class="section-divider-line"></div></div>
 
   <section id="faq">
     <div class="container">
-      <h2 class="section-title">คำถามที่พบบ่อย</h2>
-      <p class="section-desc">ตอบคำถามหลักให้ชัด เพื่อให้คุณตัดสินใจได้เร็วขึ้น</p>
+      <div class="fade-up">
+        <div class="section-num">09 — FAQ</div>
+        <h2 class="section-title">คำถามที่พบบ่อย</h2>
+        <p class="section-desc">ตอบคำถามหลักให้ชัด เพื่อให้คุณตัดสินใจได้เร็วขึ้น</p>
+      </div>
 
-      <div class="faq">
+      <div class="faq fade-up">
         <details>
           <summary>TradingView ฟรีใช้ได้ไหม?</summary>
           <p>ใช้ได้ครับ แต่ TradingView ฟรีจะเพิ่ม indicator ได้สูงสุดไม่เกิน 3 ตัว หากอยากเปิดครบ 4 ตัวพร้อมกัน อาจพิจารณาอัปเกรดแพ็กของ TradingView ตามความเหมาะสม</p>
@@ -689,33 +1027,38 @@
           <summary>โปร 10 คนแรกนับอย่างไร?</summary>
           <p>นับจาก "คนที่โอนก่อน" ตามลำดับครับ (เพื่อความชัดเจนและแฟร์กับทุกคน)</p>
         </details>
-
-        </div>
+      </div>
     </div>
   </section>
 
   
+  <!-- ═══ Section: Contact ═══ -->
+  <div class="section-divider"><div class="section-divider-line"></div></div>
+
   <section id="contact">
     <div class="container">
-      <h2 class="section-title">ทักแชทเพื่อสมัคร / ปรึกษา</h2>
-      <p class="section-desc">
-        ถ้าคุณอ่านถึงตรงนี้แล้วสนใจ แนะนำให้ทักมาเพื่อเช็คสิทธิ/แพ็กที่เหมาะกับคุณ
-      </p>
+      <div class="fade-up">
+        <div class="section-num">สมัครเลย</div>
+        <h2 class="section-title">ทักแชทเพื่อสมัคร / ปรึกษา</h2>
+        <p class="section-desc">
+          ถ้าคุณอ่านถึงตรงนี้แล้วสนใจ แนะนำให้ทักมาเพื่อเช็คสิทธิ/แพ็กที่เหมาะกับคุณ
+        </p>
 
-      <a class="btn primary" href="https://m.me/thethanaphat" target="_blank" rel="noopener">ทักแชทเพื่อสมัคร / ปรึกษา</a>
+        <a class="btn primary" href="https://m.me/thethanaphat" target="_blank" rel="noopener">ทักแชทเพื่อสมัคร / ปรึกษา</a>
+      </div>
     </div>
   </section>
 
 
   <footer>
     <div class="container">
-      <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:space-between">
+      <div class="footer-inner">
         <div>
           <b>PTM + OI Course</b> • © <span id="y"></span>
-          <div style="font-size:13px; opacity:.8; margin-top:4px">* เนื้อหานี้เป็นการศึกษา/การใช้งานเครื่องมือ ไม่ใช่คำแนะนำการลงทุนเฉพาะบุคคล</div>
+          <div class="footer-disclaimer">* เนื้อหานี้เป็นการศึกษา/การใช้งานเครื่องมือ ไม่ใช่คำแนะนำการลงทุนเฉพาะบุคคล</div>
         </div>
         <div style="font-size:13px; opacity:.85">
-          เพจ: <a href="https://www.facebook.com/thethanaphat/" target="_blank" rel="noopener" style="text-decoration:underline; text-underline-offset:3px;">อ.ใหม่ ธนภัทร | นักลงทุนอารมณ์ดี</a>
+          เพจ: <a class="footer-link" href="https://www.facebook.com/thethanaphat/" target="_blank" rel="noopener">อ.ใหม่ ธนภัทร | นักลงทุนอารมณ์ดี</a>
         </div>
       </div>
     </div>
@@ -723,6 +1066,20 @@
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Scroll fade-in animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 
 </body>
